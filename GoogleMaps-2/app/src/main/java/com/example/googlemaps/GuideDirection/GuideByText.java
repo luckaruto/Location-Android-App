@@ -372,6 +372,8 @@ public class GuideByText extends AppCompatActivity implements OnMapReadyCallback
 
         ImageView imageGuide1 = findViewById(R.id.icManeuverGuide1);
         imageGuide1.setImageResource(maneuver.findImageManeuver("straight"));
+
+
         if(!curRoad.equals(prevRoad)){
 
             check100m = true;

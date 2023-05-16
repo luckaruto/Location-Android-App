@@ -90,6 +90,9 @@ public class AdapterListImage extends RecyclerView.Adapter<AdapterListImage.MyVi
 
     @Override
     public int getItemCount() {
+        if(metadataList == null){
+            return 0;
+        }
         return metadataList.size();
     }
 

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.googlemaps.InfoPlace.infoPlace;
 import com.example.googlemaps.InfoSearching;
+import com.example.googlemaps.PlaceLabeling.ReloadActivity;
 import com.example.googlemaps.R;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BookMarkActivity extends AppCompatActivity {
+public class BookMarkActivity extends AppCompatActivity implements ReloadActivity {
 
     SQLiteDatabase db;
     List<InfoSearching> list;
@@ -112,7 +113,7 @@ public class BookMarkActivity extends AppCompatActivity {
                         // kiểm tra nếu danh sách ban đầu = danh sách đã lưu vào
                         if(list.size() == data.size()){
 
-                            AdapterBookMark ab = new AdapterBookMark(this,data);
+                            AdapterBookMark ab = new AdapterBookMark(this,data,this::reloadActivity);
                             listViewBookMark.setAdapter(ab);
 
                         }
@@ -144,4 +145,9 @@ public class BookMarkActivity extends AppCompatActivity {
         onBackPressed();
     }
 
+
+    @Override
+    public void reloadActivity() {
+        recreate();
+    }
 }

@@ -807,7 +807,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Uri uri = getIntent().getData();
         if(uri != null){
-            Toast.makeText(this, "TestLink", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "TestLink", Toast.LENGTH_SHORT).show();
             String query = uri.getQuery();
             String param[] = query.split("=");
 

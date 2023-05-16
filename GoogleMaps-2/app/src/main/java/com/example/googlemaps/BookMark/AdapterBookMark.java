@@ -26,6 +26,7 @@ import com.example.googlemaps.InfoPlace.FragmentInfo;
 import com.example.googlemaps.InfoPlace.infoPlace;
 import com.example.googlemaps.InfoSearching;
 import com.example.googlemaps.MapsActivity;
+import com.example.googlemaps.PlaceLabeling.ReloadActivity;
 import com.example.googlemaps.R;
 
 import java.io.UnsupportedEncodingException;
@@ -35,11 +36,13 @@ public class AdapterBookMark extends ArrayAdapter<infoPlace> {
 
     Context context;
     List<infoPlace> data;
+    ReloadActivity reloadActivity;
 
-    public AdapterBookMark(@NonNull Context context, List<infoPlace> list) {
+    public AdapterBookMark(@NonNull Context context, List<infoPlace> list, ReloadActivity reloadActivity) {
         super(context,0, list);
         this.context = context;
         this.data = list;
+        this.reloadActivity = reloadActivity;
     }
 
     @NonNull
@@ -89,6 +92,8 @@ public class AdapterBookMark extends ArrayAdapter<infoPlace> {
                         SQLiteDatabase db = context.openOrCreateDatabase("myDB", Context.MODE_PRIVATE,null);
                         WorkWithSQLiteBookMark workWithSQLiteBookMark = new WorkWithSQLiteBookMark(db,"Luu");
                         workWithSQLiteBookMark.deleteRow(ip.name, ip.address);
+
+                        reloadActivity.reloadActivity();
                     }
                 });
 
