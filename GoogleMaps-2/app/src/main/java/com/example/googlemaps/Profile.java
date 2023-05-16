@@ -168,6 +168,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+
+
     private void fetchCurrentUserdata() {
         user = ((UserClient) (getApplicationContext())).getUser();
 
@@ -226,10 +228,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     if (task.isSuccessful()) {
                         if (task.isSuccessful()) {
                             download_url = task.getResult().toString();
-                            //Toast.makeText(ChatActivity.this, "From ChatActivity, link: " +download_url, Toast.LENGTH_SHORT).show();
-
                             user.setAvatar(download_url);
-
+                            loadImageChatMessage(iv_profileImage_profile_fragment, download_url);
                             mDb.collection(getString(R.string.collection_users))
                                     .document(FirebaseAuth.getInstance().getUid())
                                     .set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -262,27 +262,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mDb.collection(getString(R.string.collection_users))
-                .document(FirebaseAuth.getInstance().getUid())
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "onComplete: successfully set the user client.");
-                            User user = task.getResult().toObject(User.class);
-
-                            // set value for another activity
-                            UserClient applicationContext = (UserClient) getApplicationContext();
-                            applicationContext.setUser(user);
-                            //Log.i(TAG,user.toString());
-                            // ((UserClient)((Activity) context).setUser(user);
-                        }
-                    }
-                });
-    }
 
 
     @Override
@@ -292,6 +271,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             uploadImage();
+
         }
 
     }
@@ -318,7 +298,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                                     tv_profile_fragment_bio.setText("");
                                 }
                                 userId = user.getUser_id();
-                                //iv_profileImage_profile_fragment.setImageResource(R.drawable.placeholder_image_chat);
                                 if (imageUrl.equals("default")) {
                                     iv_profileImage_profile_fragment.setImageResource(R.drawable.placeholder_image_chat);
 
